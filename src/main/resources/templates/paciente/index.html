@@ -18,7 +18,12 @@
                     </tr>
                 </thead>
                 <tbody>
-
+                    <tr th:each="umPaciente : ${listaPacientes}">
+                        <td th:text="${umPaciente.id}"></td>
+                        <td th:text="${umPaciente.nome}"></td>
+                        <td th:text="${umPaciente.sexo}"></td>
+                        <td th:text="${umPaciente.dataNascimento}"></td>
+                    </tr>
                 </tbody>
             </table>
 

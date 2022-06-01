@@ -19,6 +19,7 @@ public class Paciente {
     private String sexo;
     @Temporal(value = TemporalType.DATE)
     private Date dataNascimento;
+    
 
     public Date getDataNascimento() {
         return dataNascimento;
