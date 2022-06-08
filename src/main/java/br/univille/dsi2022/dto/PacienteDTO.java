@@ -2,10 +2,13 @@ package br.univille.dsi2022.dto;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class PacienteDTO {
     private long id;
     private String nome;
     private String sexo;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dataNascimento;
     
     public long getId() {

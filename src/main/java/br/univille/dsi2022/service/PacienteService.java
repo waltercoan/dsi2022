@@ -6,5 +6,5 @@ import br.univille.dsi2022.dto.PacienteDTO;
 
 public interface PacienteService {
     public List<PacienteDTO> getAll();
-    
+    public PacienteDTO save(PacienteDTO paciente);
 }

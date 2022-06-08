@@ -26,5 +26,12 @@ public class PacienteServiceImpl implements PacienteService{
 
         return mapper.mapPaciente(repository.findAll());
     }
+
+    @Override
+    public PacienteDTO save(PacienteDTO paciente) {
+        Paciente pacienteEntity = mapper.mapPacienteDTO(paciente);
+        repository.save(pacienteEntity);
+        return mapper.mapPaciente(pacienteEntity);
+    }
     
 }
