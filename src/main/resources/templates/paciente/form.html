@@ -11,6 +11,8 @@
                 th:object="${paciente}"
                 method="POST">
                 <!--  comentario -->
+
+                <input type="hidden" th:field="*{id}">
                 <div class="form-group">
                     <label for="txtnome">Nome</label>
                     <input type="text" class="form-control"

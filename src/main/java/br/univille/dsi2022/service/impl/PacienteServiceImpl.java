@@ -1,6 +1,7 @@
 package br.univille.dsi2022.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,22 @@ public class PacienteServiceImpl implements PacienteService{
         Paciente pacienteEntity = mapper.mapPacienteDTO(paciente);
         repository.save(pacienteEntity);
         return mapper.mapPaciente(pacienteEntity);
+    }
+
+    @Override
+    public PacienteDTO findById(long id) {
+        Optional<Paciente> paciente = repository.findById(id);
+        if(paciente.isPresent()){
+            Paciente pacienteEntity = paciente.get();
+            return mapper.mapPaciente(pacienteEntity);
+
+        }
+        return new PacienteDTO();
+    }
+
+    @Override
+    public void delete(long id) {
+        repository.deleteById(id);
     }
     
 }

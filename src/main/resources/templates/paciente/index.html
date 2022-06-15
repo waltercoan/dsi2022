@@ -9,13 +9,14 @@
         <div class="container">
             
             <a th:href="@{/paciente/novo}" class="btn btn-primary">Novo</a>
-            <table class="table">
+            <table class="table" id="pacientes">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Sexo</th>
                         <th>Data de Nascimento</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,12 +25,39 @@
                         <td th:text="${umPaciente.nome}"></td>
                         <td th:text="${umPaciente.sexo}"></td>
                         <td th:text="${umPaciente.dataNascimento}"></td>
+                        <td><a th:href=
+                            "@{'/paciente/alterar/' + ${umPaciente.id}}"
+                            class="btn btn-primary">Alterar</a>
+                            <button class="btn btn-danger js-delete"
+                            th:data-id="${umPaciente.id}">Excluir
+                            </button>
+                        
+                        </td>
                     </tr>
                 </tbody>
             </table>
 
         </div>
         <div th:include="layout :: footer">(footer)</div>
-        
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#pacientes").on('click',".js-delete", function(){
+                    let button = $(this);
+                    bootbox.confirm("Confirma a exclusão do registro?", 
+                        function(result){
+                            if(result){
+                                $.ajax({
+                                    url: '/paciente/delete/' + button.attr("data-id"),
+                                    method: "GET",
+                                    success : function(){
+                                        window.location.href = "/paciente/";
+                                    }
+                                });
+                            }
+
+                    });
+                });
+            });
+        </script>
     </body>
 </html>
