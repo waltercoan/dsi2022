@@ -2,7 +2,6 @@ package br.univille.dsi2022.controller;
 
 import java.util.List;
 
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.univille.dsi2022.dto.PacienteDTO;
-import br.univille.dsi2022.entity.Paciente;
 import br.univille.dsi2022.service.PacienteService;
 
 @Controller
@@ -27,7 +25,7 @@ public class PacienteController {
     public ModelAndView index(){
         List<PacienteDTO> listaPacientes = service.getAll();
         return new 
-            ModelAndView("paciente/index", 
+            ModelAndView("paciente/index2", 
             "listaPacientes",listaPacientes);
     }
 

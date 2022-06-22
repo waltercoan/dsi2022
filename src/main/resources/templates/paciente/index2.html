@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    
+    <head th:insert="layout :: htmlhead">
+        
+    </head>
+    <link rel="stylesheet" href="/indexpaciente.css">
+    <body>
+        <nav th:replace="layout :: menu">(menu)</nav>
+        <div class="container">
+            
+            <a th:href="@{/paciente/novo}" class="btn btn-primary">Novo</a>
+            <button class="btn btn-primary" id="btnAlterar">Alterar</button>
+            <button class="btn btn-danger" id="btnExcluir">Excluir</button>
+            <table class="table" id="pacientes">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Sexo</th>
+                        <th>Data de Nascimento</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="umPaciente : ${listaPacientes}">
+                        <td><input type="checkbox" th:data-id="${umPaciente.id}" class="js-check"></td>
+                        <td th:text="${umPaciente.id}"></td>
+                        <td th:text="${umPaciente.nome}"></td>
+                        <td th:text="${umPaciente.sexo}"></td>
+                        <td th:text="${umPaciente.dataNascimento}"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div th:include="layout :: footer">(footer)</div>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#btnExcluir").on('click', function(){
+                    bootbox.confirm("Confirma a exclusão do registro?", 
+                        function(result){
+                            if(result){
+                                $('input[type=checkbox]').each(function () {
+                                    if(this.checked){
+                                        $.ajax({
+                                            url: '/paciente/delete/' + $(this).attr("data-id"),
+                                            method: "GET",
+                                            success : function(){
+                                                window.location.href = "/paciente/";
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                    });
+                });
+                $("#btnAlterar").on('click', function(){
+                    $('input[type=checkbox]').each(function () {
+                        if(this.checked){
+                            window.location.href = "/paciente/alterar/" + $(this).attr("data-id");
+                        }
+                    });
+                });
+                $("#pacientes").on('click',"tr", function(){
+                    let checkbox = $(this).find('.js-check');
+                    console.log(checkbox);
+                    checkbox.prop("checked",!checkbox.is(':checked'));
+                });
+            });
+        </script>
+    </body>
+</html>
