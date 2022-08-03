@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    
+    <head th:include="layout :: htmlhead"></head>
+
+    <body>
+        <nav th:replace="layout :: menu">(menu)</nav>
+        <div class="container">
+            
+            <a th:href="@{/consulta/novo}" class="btn btn-primary">Novo</a>
+            <table class="table" id="consultas">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Data</th>
+                        <th>Status</th>
+                        <th>Paciente</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="umaConsulta : ${listaConsultas}">
+                        <td th:text="${umaConsulta.id}"></td>
+                        <td th:text="${umaConsulta.data}"></td>
+                        <td th:text="${umaConsulta.status}"></td>
+                        <td th:text="${umaConsulta.paciente?.nome}"></td>
+                        <td><a th:href=
+                            "@{'/consulta/alterar/' + ${umaConsulta.id}}"
+                            class="btn btn-primary">Alterar</a>
+                            <button class="btn btn-danger js-delete"
+                            th:data-id="${umaConsulta.id}">Excluir
+                            </button>
+                        
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div th:include="layout :: footer">(footer)</div>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#consultas").on('click',".js-delete", function(){
+                    let button = $(this);
+                    bootbox.confirm("Confirma a exclusão do registro?", 
+                        function(result){
+                            if(result){
+                                $.ajax({
+                                    url: '/consulta/delete/' + button.attr("data-id"),
+                                    method: "GET",
+                                    success : function(){
+                                        window.location.href = "/consulta/";
+                                    }
+                                });
+                            }
+
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>

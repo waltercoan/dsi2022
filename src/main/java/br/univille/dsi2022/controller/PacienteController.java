@@ -25,7 +25,8 @@ public class PacienteController {
     public ModelAndView index(){
         List<PacienteDTO> listaPacientes = service.getAll();
         return new 
-            ModelAndView("paciente/index2", 
+            //ModelAndView("paciente/index2", 
+            ModelAndView("paciente/index", 
             "listaPacientes",listaPacientes);
     }
 

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    
+    <head th:include="layout :: htmlhead"></head>
+
+    <body>
+        <nav th:replace="layout :: menu">(menu)</nav>
+        <div class="container">
+            <h5>Nova Consulta</h5>
+            <form th:action="@{/consulta/(form)}" 
+                th:object="${consulta}"
+                method="POST">
+                <!--  comentario -->
+
+                <input type="hidden" th:field="*{id}">
+                <div class="form-group">
+                    <label for="txtdata">Data Consulta</label>
+                    <input type="date" class="form-control"
+                    id="txtdata" th:field="*{data}" >
+                </div>
+
+                <div class="form-group">
+                    <label>Paciente:</label>
+                    <select th:field="*{pacienteId}"
+                        class="form-select">
+                        <option
+                            th:each="paciente : ${listaPacientes}"
+                            th:value="${paciente.id}"
+                            th:text="${paciente.nome}"></option>
+                        
+                    </select>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Procedimento Vinculados</h5>
+                      <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Descrição</th>
+                                <th>Valor</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="umProc, stat : *{listaProcedimentos}">
+                                <td th:text="${umProc.descricao}"></td>
+                                <td th:text="${umProc.valor}"></td>
+                                <input type="hidden" th:field="*{listaProcedimentos[__${stat.index}__].id}"/>
+                                <input type="hidden" th:field="*{listaProcedimentos[__${stat.index}__].descricao}"/>
+                                <input type="hidden" th:field="*{listaProcedimentos[__${stat.index}__].valor}"/>
+                                <td>
+                                    <button type="submit" name="removeitem" th:value="__${stat.index}__" class="btn btn-primary">Remover</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Novo Procedimento</h5>
+                      
+                      <div class="form-group">
+                        <label for="txtdescricao">Descrição</label>
+                        <input type="text" class="form-control"
+                        id="txtdescricao" th:field="${procedimentoRealizado.descricao}" >
+                      </div>
+                      <div class="form-group">
+                        <label for="txtdescricao">Valor</label>
+                        <input type="text" class="form-control"
+                        id="txtvalor" th:field="${procedimentoRealizado.valor}" >
+                      </div>
+
+                      <button type="submit" name="incitem" class="btn btn-primary">Incluir Procedimento</button>
+                    </div>
+                    
+                </div>
+                
+                
+                <button type="submit" name="save" class="btn btn-primary">Salvar Consulta</button>          
+            </form>
+        </div>
+        <div th:include="layout :: footer">(footer)</div>
+    </body>
+</html>

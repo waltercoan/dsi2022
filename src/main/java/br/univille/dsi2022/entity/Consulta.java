@@ -30,6 +30,12 @@ public class Consulta {
     private List<ProcedimentoRealizado> listaProcedimentos = new ArrayList<>();
 
     
+    public List<ProcedimentoRealizado> getListaProcedimentos() {
+        return listaProcedimentos;
+    }
+    public void setListaProcedimentos(List<ProcedimentoRealizado> listaProcedimentos) {
+        this.listaProcedimentos = listaProcedimentos;
+    }
     public Paciente getPaciente() {
         return paciente;
     }
