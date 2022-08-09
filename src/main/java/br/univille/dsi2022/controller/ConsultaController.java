@@ -78,6 +78,7 @@ public class ConsultaController {
     @PostMapping(params="save")
     public ModelAndView save(@ModelAttribute("consulta") 
                             ConsultaDTO consulta){
+        consulta.setPaciente(pacienteService.findById(consulta.getPacienteId()));
         service.save(consulta);
         return new ModelAndView("redirect:/consulta");
     }
