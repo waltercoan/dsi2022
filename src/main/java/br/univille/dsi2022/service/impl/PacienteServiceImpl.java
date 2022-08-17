@@ -50,5 +50,10 @@ public class PacienteServiceImpl implements PacienteService{
     public void delete(long id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public List<PacienteDTO> buscaPorNome(String nome) {
+        return mapper.mapPaciente(repository.findByNomeIgnoreCaseContaining(nome));
+    }
     
 }

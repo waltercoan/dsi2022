@@ -9,6 +9,11 @@
         <div class="container">
             
             <a th:href="@{/paciente/novo}" class="btn btn-primary">Novo</a>
+            <div class="form-group">
+                <select class="form-control basicAutoSelect" name="simple_select"
+                    placeholder="Busca pelo nome"
+                    data-url="paciente/busca-nome/" autocomplete="off"></select>
+            </div>
             <table class="table" id="pacientes">
                 <thead>
                     <tr>
@@ -57,7 +62,16 @@
 
                     });
                 });
+                $('.basicAutoSelect').autoComplete({
+                    resolverSettings: {
+                        url: 'paciente/busca-nome/'
+                    }
+                });
+                
+                 
+                
             });
+            
         </script>
     </body>
 </html>
