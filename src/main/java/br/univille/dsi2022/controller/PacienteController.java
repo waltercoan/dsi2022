@@ -13,12 +13,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 import com.google.gson.Gson;
 
 import br.univille.dsi2022.dto.PacienteDTO;
 import br.univille.dsi2022.service.PacienteService;
+import br.univille.dsi2022.service.SalvarArquivosService;
 
 @Controller
 @RequestMapping("/paciente")
@@ -26,6 +34,8 @@ public class PacienteController {
     
     @Autowired
     private PacienteService service;
+    @Autowired
+    private SalvarArquivosService salvarArquivoService;
 
     @GetMapping
     public ModelAndView index(){
@@ -43,9 +53,28 @@ public class PacienteController {
     }
 
     @PostMapping(params="form")
-    public ModelAndView save(PacienteDTO paciente){
+    public ModelAndView save(PacienteDTO paciente, @RequestParam("file") MultipartFile file){
+
+        if(file.getSize() != 0){
+            String caminho = salvarArquivoService.save(file);
+            paciente.setFoto(caminho);
+        }
+
         service.save(paciente);
         return new ModelAndView("redirect:/paciente");
+    }
+    @GetMapping(value = "/image/{id}")
+    public @ResponseBody byte[] getImage(@PathVariable("id") long id){
+        try{
+            PacienteDTO paciente = service.findById(id);
+            File file = new File(paciente.getFoto());
+            byte[] bytes = new byte[(int) file.length()];
+            DataInputStream dis = new DataInputStream(new FileInputStream(file));
+            dis.readFully(bytes);
+            return bytes;
+        }catch (Exception e){
+            return new byte[0];
+        }
     }
     @RequestMapping(
         value = "/busca-nome", 
