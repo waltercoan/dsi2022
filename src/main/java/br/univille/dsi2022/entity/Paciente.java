@@ -19,8 +19,15 @@ public class Paciente {
     private String sexo;
     @Temporal(value = TemporalType.DATE)
     private Date dataNascimento;
+    private String foto;
     
 
+    public String getFoto() {
+        return foto;
+    }
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
     public Date getDataNascimento() {
         return dataNascimento;
     }
