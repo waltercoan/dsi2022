@@ -78,6 +78,18 @@ public class ConsultaController {
     @PostMapping(params="save")
     public ModelAndView save(@ModelAttribute("consulta") 
                             ConsultaDTO consulta){
+        if(consulta.getPacienteId() == 0){
+            List<PacienteDTO> listaPacientes =  pacienteService.getAll();
+            ProcedimentoRealizadoDTO procedimentoRealizado = new ProcedimentoRealizadoDTO();
+            HashMap<String,Object> dados = new HashMap<>();
+            dados.put("consulta",consulta);
+            dados.put("listaPacientes",listaPacientes);
+            dados.put("procedimentoRealizado",procedimentoRealizado);
+
+            return new ModelAndView("consulta/form", dados);
+
+        }
+
         consulta.setPaciente(pacienteService.findById(consulta.getPacienteId()));
         service.save(consulta);
         return new ModelAndView("redirect:/consulta");

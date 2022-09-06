@@ -23,7 +23,10 @@
                 <div class="form-group">
                     <label>Paciente:</label>
                     <select th:field="*{pacienteId}"
-                        class="form-select">
+                        class="form-select" required>
+                        <option value="0" style="display:none" th:disabled="disabled" th:selected="selected"> 
+                            -- select an option -- 
+                        </option>
                         <option
                             th:each="paciente : ${listaPacientes}"
                             th:value="${paciente.id}"
