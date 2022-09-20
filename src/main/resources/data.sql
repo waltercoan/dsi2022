@@ -1,1 +1,2 @@
-insert into paciente(nome, sexo, data_nascimento) values ('Zezinho', 'Masculino','2022-05-31');
+insert ignore into usuario(id,usuario,senha) values(1,'admin','admin');
+
