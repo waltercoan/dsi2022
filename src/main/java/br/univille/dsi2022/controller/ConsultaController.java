@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,6 +30,7 @@ public class ConsultaController {
     private PacienteService pacienteService;
 
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ModelAndView index(){
         List<ConsultaDTO> listaConsultas = service.getAll();
         return new 
@@ -78,18 +80,6 @@ public class ConsultaController {
     @PostMapping(params="save")
     public ModelAndView save(@ModelAttribute("consulta") 
                             ConsultaDTO consulta){
-        if(consulta.getPacienteId() == 0){
-            List<PacienteDTO> listaPacientes =  pacienteService.getAll();
-            ProcedimentoRealizadoDTO procedimentoRealizado = new ProcedimentoRealizadoDTO();
-            HashMap<String,Object> dados = new HashMap<>();
-            dados.put("consulta",consulta);
-            dados.put("listaPacientes",listaPacientes);
-            dados.put("procedimentoRealizado",procedimentoRealizado);
-
-            return new ModelAndView("consulta/form", dados);
-
-        }
-
         consulta.setPaciente(pacienteService.findById(consulta.getPacienteId()));
         service.save(consulta);
         return new ModelAndView("redirect:/consulta");
