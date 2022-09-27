@@ -1,4 +1,5 @@
 insert ignore into usuario(id,usuario,senha) values(1,'admin','admin');
+
 insert ignore into usuario(id,usuario,senha) values(2,'usuario','usuario');
 insert ignore into PAPEL(id,PAPEL) values(1,'admin');
 insert ignore into PAPEL(id,PAPEL) values(2,'user');
