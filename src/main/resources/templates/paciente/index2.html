@@ -66,8 +66,8 @@
                 });
                 $("#pacientes").on('click',"tr", function(){
                     let checkbox = $(this).find('.js-check');
-                    console.log(checkbox);
-                    checkbox.prop("checked",!checkbox.is(':checked'));
+                    console.log(checkbox.prop("checked"));
+                    checkbox.prop("checked",!checkbox.prop("checked"));
                 });
             });
         </script>

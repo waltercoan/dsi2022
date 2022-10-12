@@ -25,7 +25,7 @@ public class SecurityConfigurer
         http.csrf().disable()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
-        .authorizeRequests().antMatchers("/fonte_dados/**").permitAll().and().headers().frameOptions().disable()
+        .authorizeRequests().antMatchers("/fonte_dados/**","/api/**").permitAll().and().headers().frameOptions().disable()
         .and()
         .authorizeRequests().antMatchers("/**").authenticated().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
         .and()
