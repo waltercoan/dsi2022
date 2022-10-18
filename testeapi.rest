@@ -3,3 +3,26 @@ GET http://localhost:8080/api/v1/pacientes
 ###
 
 POST http://localhost:8080/api/v1/pacientes
+Content-Type: application/json
+
+{
+    "nome": "Huguinho2",
+    "sexo": "Masculino"
+}
+
+###
+
+GET http://localhost:8080/api/v1/pacientes/1
+
+###
+
+PUT http://localhost:8080/api/v1/pacientes/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "nome": "Zezinho da Silva",
+  "sexo": "Masculino",
+  "dataNascimento": null,
+  "foto": null
+}
