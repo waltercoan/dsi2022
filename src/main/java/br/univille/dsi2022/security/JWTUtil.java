@@ -30,7 +30,7 @@ public class JWTUtil {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    private String extractUserName(String token){
+    public String extractUserName(String token){
         return extractClaim(token, Claims::getSubject);
     }
     
