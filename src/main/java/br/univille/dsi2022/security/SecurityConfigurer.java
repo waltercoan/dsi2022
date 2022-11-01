@@ -27,12 +27,10 @@ public class SecurityConfigurer
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .authorizeRequests().antMatchers("/fonte_dados/**","/api/v1/auth/signin").permitAll()
+        .and().headers().frameOptions().disable()
         .and()
-        .authorizeRequests().antMatchers("/fonte_dados/**","/api/v1/auth/signin").permitAll().and().headers().frameOptions().disable()
-        .and()
-        .authorizeRequests()
-        .antMatchers("/api/**").authenticated()
+        .authorizeRequests().antMatchers("/api/**").authenticated()
         .and()
         .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
