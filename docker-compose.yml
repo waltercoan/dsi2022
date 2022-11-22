@@ -1,0 +1,30 @@
+version: '3'
+services:
+  webdsi2022:
+    image: walterdsi2022:latest
+    depends_on:
+      - "dbwalter"
+    ports:
+      - "8090:8080"
+    links:
+      - dbwalter
+    environment:
+      DB_HOST: 'dbwalter:3306'
+      DB_USER: 'root'
+      DB_PASSWORD: 'root'
+      DB_NAME: 'dsi2022'
+      SPRING_PROFILES_ACTIVE: 'prod'
+  dbwalter:
+    container_name: dbwalter
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'dsi2022'
+      MYSQL_USER: 'admin'
+      MYSQL_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: 'root'
+#    ports:
+#        - '3306:3306'
+#    expose:
+#        - '3306'
+
